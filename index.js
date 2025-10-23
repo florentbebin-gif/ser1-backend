@@ -1,18 +1,19 @@
-// index.js — SER1 backend (ajout /api/ir)
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-const ir = require('./routes/ir');
-
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use(cors()); // temporaire
+app.use(cors());
 app.use(bodyParser.json());
 
-app.use('/api/placement', require('./routes/placement'));
-app.get('/health', (req,res)=>res.send('ok'));
-app.use('/api/ir', ir);
+app.get('/health', (req,res)=>res.type('text').send('ok'));
 
-app.listen(PORT, () => console.log('✅ Server running on', PORT));
+// Routes
+app.use('/api/placement', require('./routes/placement'));
+app.use('/api/ir', require('./routes/ir')); // <— AJOUT
+
+// Root
+app.get('/', (req,res)=>res.type('text').send('SER1 backend'));
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, ()=>console.log('server running on '+PORT));
