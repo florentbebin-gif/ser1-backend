@@ -1,0 +1,39 @@
+{
+  "annee": 2025,
+  "tranches": [
+    {
+      "borne_inf": 0,
+      "borne_sup": 11394,
+      "taux": 0.0
+    },
+    {
+      "borne_inf": 11394,
+      "borne_sup": 29105,
+      "taux": 0.11
+    },
+    {
+      "borne_inf": 29105,
+      "borne_sup": 77607,
+      "taux": 0.3
+    },
+    {
+      "borne_inf": 77607,
+      "borne_sup": 168994,
+      "taux": 0.41
+    },
+    {
+      "borne_inf": 168994,
+      "borne_sup": null,
+      "taux": 0.45
+    }
+  ],
+  "decote": {
+    "seuil_celib": 1845,
+    "montant_celib": 833,
+    "seuil_couple": 3045,
+    "montant_couple": 1378
+  },
+  "plaf_qf": {
+    "avantage_max_par_demi_part": 1678
+  }
+}
