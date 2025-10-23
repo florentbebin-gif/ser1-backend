@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors()); // temporaire
 app.use(bodyParser.json());
+
 app.use('/api/placement', require('./routes/placement'));
 app.get('/health', (req,res)=>res.send('ok'));
 app.use('/api/ir', ir);
