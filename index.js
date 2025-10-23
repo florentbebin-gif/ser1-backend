@@ -1,37 +1,39 @@
+// index.js — backend SER1
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
-
-const calcRouter = require('./routes/calc');
-const exportRouter = require('./routes/export-pptx');
+const bodyParser = require('body-parser');
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-/**
- * CORS — autorise ton front Vercel et le dev local
- * IMPORTANT : ce middleware doit être placé AVANT les routes (/health, /api/…)
- */
-app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://ser1-frontend.vercel.app' // <= ton origine front (celle vue dans l’erreur)
-  ],
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type']
-}));
+// ⚠️ TEMPORAIRE : autoriser toutes les origines (pour tests Render/Vercel)
+app.use(cors());
 
+// Parser JSON
 app.use(bodyParser.json());
 
-// Route santé (aussi couverte par CORS)
+// Route de santé (pour tester Render)
 app.get('/health', (req, res) => {
-  res.set('Cache-Control', 'no-store');
   res.send('ok');
 });
 
-// API
-app.use('/api/calc', calcRouter);
-app.use('/api/export-pptx', exportRouter);
+// Exemple de route calcul (appelée par le front)
+app.post('/api/calc', (req, res) => {
+  try {
+    const { age, revenu, epargneAnn } = req.body;
 
-// Render fournit PORT via variables d'env
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log('Server running on', PORT));
+    // Simule le calcul de ton fichier Excel
+    const potentiel = Math.round((epargneAnn || 0) * (65 - (age || 45)) * 1.05);
+    const ir_est = Math.round((revenu || 0) * 0.2);
+
+    res.json({ potentiel, ir_est });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+});
+
+// Lancer le serveur
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
