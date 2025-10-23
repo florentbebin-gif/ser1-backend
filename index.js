@@ -10,7 +10,7 @@ app.get('/health', (req,res)=>res.type('text').send('ok'));
 
 // Routes
 app.use('/api/placement', require('./routes/placement'));
-app.use('/api/ir', require('./routes/ir')); // <— AJOUT
+app.use('/api/ir', require('./routes/ir'));
 
 // Root
 app.get('/', (req,res)=>res.type('text').send('SER1 backend'));
